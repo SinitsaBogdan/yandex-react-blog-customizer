@@ -1,39 +1,116 @@
+import { useState } from 'react';
 import { ArrowButton } from 'components/arrow-button';
 import { Button } from 'components/button';
+import { Text } from 'src/components/text';
+import { Select } from 'src/components/select';
+import { Separator } from 'src/components/separator';
+import {
+	ArticleStateType,
+	backgroundColorOptions,
+	contentWidthOptions,
+	fontColorOptions,
+	fontFamilyOptions,
+	fontSizeOptions,
+} from 'src/constants/articleProps';
 
 import styles from '../styles/ArticleParamsForm.module.scss';
-import { useState } from 'react';
-import { Select } from 'src/components/select';
-import { fontFamilyOptions, OptionType } from 'src/constants/articleProps';
 
-export const ArticleParamsForm = () => {
-	const [selectedFonts, setselectedFonts] = useState<OptionType | null>(null);
+export const ArticleParamsForm = ({
+	state,
+	setState,
+	clear,
+	save,
+}: {
+	state: ArticleStateType;
+	setState: React.Dispatch<React.SetStateAction<ArticleStateType>>;
+	clear: () => void;
+	save: () => void;
+}) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-
-	const classNameAside = `${styles.container} ${
-		isOpen && styles.container_open
-	}`;
-
-	function handlerOnClick(): void {
-		setIsOpen(!isOpen);
-	}
 
 	return (
 		<>
-			<ArrowButton isOpen={isOpen} onClick={handlerOnClick} />
-			<aside className={classNameAside}>
+			<ArrowButton
+				isOpen={isOpen}
+				onClick={() => {
+					setIsOpen(!isOpen);
+				}}
+			/>
+			<aside
+				className={`${styles.container} ${isOpen && styles.container_open}`}>
 				<form className={styles.form}>
+					<Text as='h2' size={31} weight={800} uppercase>
+						Задайте параметры
+					</Text>
+
 					<Select
-						selected={selectedFonts}
+						title='Шрифт'
+						selected={state.fontFamilyOption}
 						options={fontFamilyOptions}
 						placeholder='Выберете шрифт'
 						onChange={(event) => {
-							setselectedFonts(event);
+							setState({
+								...state,
+								fontFamilyOption: event,
+							});
+						}}
+					/>
+					<Select
+						title='Размер шрифта'
+						selected={state.fontSizeOption}
+						options={fontSizeOptions}
+						placeholder='Выберете размер шрифта'
+						onChange={(event) => {
+							setState({
+								...state,
+								fontSizeOption: event,
+							});
+						}}
+					/>
+
+					<Select
+						title='Цвет шрифта'
+						selected={state.fontColorOption}
+						options={fontColorOptions}
+						placeholder='Выберете цвет шрифта'
+						onChange={(event) => {
+							setState({
+								...state,
+								fontColorOption: event,
+							});
+						}}
+					/>
+
+					<Separator />
+
+					<Select
+						title='Цвет фона'
+						selected={state.backgroundColorOption}
+						options={backgroundColorOptions}
+						placeholder='Выберете цвет фона'
+						onChange={(event) => {
+							setState({
+								...state,
+								backgroundColorOption: event,
+							});
+						}}
+					/>
+
+					<Select
+						title='Ширина контента'
+						selected={state.contentWidthOption}
+						options={contentWidthOptions}
+						placeholder='Выберете ширину контента'
+						onChange={(event) => {
+							setState({
+								...state,
+								contentWidthOption: event,
+							});
 						}}
 					/>
 					<div className={styles.bottomContainer}>
-						<Button title='Сбросить' type='reset' onClick={handlerOnClick} />
-						<Button title='Применить' type='submit' />
+						<Button title='Сбросить' type='reset' onClick={clear} />
+						<Button title='Применить' type='button' onClick={save} />
 					</div>
 				</form>
 			</aside>
