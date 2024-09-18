@@ -33,7 +33,7 @@ export const fontFamilyOptions: OptionType[] & {
 	},
 ];
 
-export const fontColors: OptionType[] = [
+export const fontColorOptions: OptionType[] = [
 	{
 		title: 'Черный',
 		value: '#000000',
@@ -90,7 +90,7 @@ export const fontColors: OptionType[] = [
 	},
 ];
 
-export const backgroundColors: OptionType[] = [
+export const backgroundColorOptions: OptionType[] = [
 	{
 		title: 'Белый',
 		value: '#FFFFFF',
@@ -147,7 +147,7 @@ export const backgroundColors: OptionType[] = [
 	},
 ];
 
-export const contentWidthArr: OptionType[] = [
+export const contentWidthOptions: OptionType[] = [
 	{
 		title: 'Широкий',
 		value: '1394px',
@@ -170,9 +170,9 @@ export const fontSizeOptions: OptionType[] = [
 
 export const defaultArticleState = {
 	fontFamilyOption: fontFamilyOptions[0],
-	fontColor: fontColors[0],
-	backgroundColor: backgroundColors[0],
-	contentWidth: contentWidthArr[0],
+	fontColorOption: fontColorOptions[0],
+	backgroundColorOption: backgroundColorOptions[0],
+	contentWidthOption: contentWidthOptions[0],
 	fontSizeOption: fontSizeOptions[0],
 };
 
