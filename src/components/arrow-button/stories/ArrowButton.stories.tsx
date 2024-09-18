@@ -5,7 +5,6 @@ import { ArrowButton } from '../ui/ArrowButton';
 const meta: Meta<typeof ArrowButton> = {
 	title: 'Design System/Buttons/ArrowButton',
 	component: ArrowButton,
-	tags: ['autodocs'],
 };
 
 export default meta;
