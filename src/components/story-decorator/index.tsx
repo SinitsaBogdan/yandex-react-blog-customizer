@@ -1,1 +1,0 @@
-export { StoryDecorator } from './StoryDecorator';
