@@ -16,6 +16,7 @@ import {
 
 import styles from '../styles/ArticleParamsForm.module.scss';
 import clsx from 'clsx';
+import { useToggleFormActiv } from '../hooks/useToggleFormActiv';
 
 export const ArticleParamsForm = ({
 	updateAppState,
@@ -29,6 +30,12 @@ export const ArticleParamsForm = ({
 		[styles.container]: true,
 		[styles.container_open]: isOpen,
 	});
+
+	useToggleFormActiv(onClose, 'article', isOpen);
+
+	function onClose() {
+		setIsOpen(false);
+	}
 
 	function handleFormClear(): void {
 		setArticleState(defaultArticleState);
