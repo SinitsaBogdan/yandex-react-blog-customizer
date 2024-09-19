@@ -14,6 +14,7 @@ import {
 } from 'src/constants/articleProps';
 
 import styles from '../styles/ArticleParamsForm.module.scss';
+import clsx from 'clsx';
 
 export const ArticleParamsForm = ({
 	state,
@@ -28,6 +29,11 @@ export const ArticleParamsForm = ({
 }) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 
+	const asideStyle = clsx({
+		[styles.container]: true,
+		[styles.container_open]: isOpen,
+	});
+
 	return (
 		<>
 			<ArrowButton
@@ -36,8 +42,7 @@ export const ArticleParamsForm = ({
 					setIsOpen(!isOpen);
 				}}
 			/>
-			<aside
-				className={`${styles.container} ${isOpen && styles.container_open}`}>
+			<aside className={asideStyle}>
 				<form className={styles.form}>
 					<Text as='h2' size={31} weight={800} uppercase>
 						Задайте параметры
