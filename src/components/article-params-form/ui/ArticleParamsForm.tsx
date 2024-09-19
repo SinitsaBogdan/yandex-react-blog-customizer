@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { ArrowButton } from 'components/arrow-button';
 import { Button } from 'components/button';
 import { Text } from 'src/components/text';
@@ -16,6 +16,7 @@ import {
 
 import styles from '../styles/ArticleParamsForm.module.scss';
 import clsx from 'clsx';
+import { useOutsideClickClose } from '../hooks/useToggleFormActiv';
 
 export const ArticleParamsForm = ({
 	updateAppState,
@@ -24,11 +25,16 @@ export const ArticleParamsForm = ({
 }) => {
 	const [articleState, setArticleState] = useState(defaultArticleState);
 	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const rootRef = useRef<HTMLDivElement>(null);
 
 	const asideStyle = clsx({
 		[styles.container]: true,
 		[styles.container_open]: isOpen,
 	});
+
+	function onClose(value: boolean): void {
+		setIsOpen(value);
+	}
 
 	function handleFormClear(): void {
 		setArticleState(defaultArticleState);
@@ -40,6 +46,12 @@ export const ArticleParamsForm = ({
 		updateAppState(articleState);
 	}
 
+	useOutsideClickClose({
+		isOpen,
+		rootRef,
+		onClose,
+	});
+
 	return (
 		<>
 			<ArrowButton
@@ -48,7 +60,7 @@ export const ArticleParamsForm = ({
 					setIsOpen(!isOpen);
 				}}
 			/>
-			<aside className={asideStyle}>
+			<aside className={asideStyle} ref={rootRef}>
 				<form className={styles.form} onSubmit={handleFormSubmit}>
 					<Text as='h2' size={31} weight={800} uppercase>
 						Задайте параметры
