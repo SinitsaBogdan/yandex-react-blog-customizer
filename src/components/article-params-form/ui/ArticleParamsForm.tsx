@@ -8,6 +8,7 @@ import {
 	ArticleStateType,
 	backgroundColorOptions,
 	contentWidthOptions,
+	defaultArticleState,
 	fontColorOptions,
 	fontFamilyOptions,
 	fontSizeOptions,
@@ -17,22 +18,27 @@ import styles from '../styles/ArticleParamsForm.module.scss';
 import clsx from 'clsx';
 
 export const ArticleParamsForm = ({
-	state,
-	setState,
-	clear,
-	save,
+	updateAppState,
 }: {
-	state: ArticleStateType;
-	setState: React.Dispatch<React.SetStateAction<ArticleStateType>>;
-	clear: () => void;
-	save: () => void;
+	updateAppState: (value: ArticleStateType) => void;
 }) => {
+	const [articleState, setArticleState] = useState(defaultArticleState);
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 
 	const asideStyle = clsx({
 		[styles.container]: true,
 		[styles.container_open]: isOpen,
 	});
+
+	function handleFormClear(): void {
+		setArticleState(defaultArticleState);
+		updateAppState(defaultArticleState);
+	}
+
+	function handleFormSubmit(event: React.FormEvent): void {
+		event.preventDefault();
+		updateAppState(articleState);
+	}
 
 	return (
 		<>
@@ -43,31 +49,31 @@ export const ArticleParamsForm = ({
 				}}
 			/>
 			<aside className={asideStyle}>
-				<form className={styles.form}>
+				<form className={styles.form} onSubmit={handleFormSubmit}>
 					<Text as='h2' size={31} weight={800} uppercase>
 						Задайте параметры
 					</Text>
 
 					<Select
 						title='Шрифт'
-						selected={state.fontFamilyOption}
+						selected={articleState.fontFamilyOption}
 						options={fontFamilyOptions}
 						placeholder='Выберете шрифт'
 						onChange={(event) => {
-							setState({
-								...state,
+							setArticleState({
+								...articleState,
 								fontFamilyOption: event,
 							});
 						}}
 					/>
 					<Select
 						title='Размер шрифта'
-						selected={state.fontSizeOption}
+						selected={articleState.fontSizeOption}
 						options={fontSizeOptions}
 						placeholder='Выберете размер шрифта'
 						onChange={(event) => {
-							setState({
-								...state,
+							setArticleState({
+								...articleState,
 								fontSizeOption: event,
 							});
 						}}
@@ -75,12 +81,12 @@ export const ArticleParamsForm = ({
 
 					<Select
 						title='Цвет шрифта'
-						selected={state.fontColorOption}
+						selected={articleState.fontColorOption}
 						options={fontColorOptions}
 						placeholder='Выберете цвет шрифта'
 						onChange={(event) => {
-							setState({
-								...state,
+							setArticleState({
+								...articleState,
 								fontColorOption: event,
 							});
 						}}
@@ -90,12 +96,12 @@ export const ArticleParamsForm = ({
 
 					<Select
 						title='Цвет фона'
-						selected={state.backgroundColorOption}
+						selected={articleState.backgroundColorOption}
 						options={backgroundColorOptions}
 						placeholder='Выберете цвет фона'
 						onChange={(event) => {
-							setState({
-								...state,
+							setArticleState({
+								...articleState,
 								backgroundColorOption: event,
 							});
 						}}
@@ -103,19 +109,19 @@ export const ArticleParamsForm = ({
 
 					<Select
 						title='Ширина контента'
-						selected={state.contentWidthOption}
+						selected={articleState.contentWidthOption}
 						options={contentWidthOptions}
 						placeholder='Выберете ширину контента'
 						onChange={(event) => {
-							setState({
-								...state,
+							setArticleState({
+								...articleState,
 								contentWidthOption: event,
 							});
 						}}
 					/>
 					<div className={styles.bottomContainer}>
-						<Button title='Сбросить' type='reset' onClick={clear} />
-						<Button title='Применить' type='submit' onClick={save} />
+						<Button title='Сбросить' type='reset' onClick={handleFormClear} />
+						<Button title='Применить' type='submit' />
 					</div>
 				</form>
 			</aside>
