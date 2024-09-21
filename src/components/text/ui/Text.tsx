@@ -2,7 +2,7 @@ import { ElementType, ReactNode } from 'react';
 import { clsx } from 'clsx';
 import { FontFamiliesClasses } from 'src/constants/articleProps';
 
-import styles from '../styles/index.module.scss';
+import styles from '../styles/Text.module.scss';
 
 type TextProps = {
 	/** Сам текст для вывода */

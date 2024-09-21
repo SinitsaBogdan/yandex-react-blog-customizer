@@ -1,4 +1,4 @@
-import { Text } from 'components/text';
+import { Text } from '../../text/ui/Text';
 
 import styles from '../styles/Button.module.scss';
 
